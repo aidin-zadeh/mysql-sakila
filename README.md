@@ -73,5 +73,6 @@
 * 8c. You find that you no longer need the view `top_five_genres`. Write a query to delete it.
 
 ## To Do
-[ ] Add comments.
-[ ] Update `README.md`.
+
+- [ ] Add comments.
+- [ ] Update `README.md`.
