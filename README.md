@@ -8,7 +8,7 @@ This repository includes a collection of sample queries on the [MySQL Sakila sam
 
 ## Installation
 
-* Refer to [here](https://dev.mysql.com/doc/sakila/en/sakila-installation.html) for installatin instructions.
+* Refer [here](https://dev.mysql.com/doc/sakila/en/sakila-installation.html) for installatin instructions.
 
 ## Descriptions
 
