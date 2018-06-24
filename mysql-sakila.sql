@@ -1,7 +1,7 @@
 -- list the databases on MySQL server
 SHOW DATABASES;
 
--- tell MySQL to use sakila
+-- Tell MySQL to use sakila.
 USE sakila;
 
 SHOW COLUMNS FROM sakila.actor;
@@ -10,39 +10,39 @@ SHOW COLUMNS FROM sakila.actor;
 SELECT 
 	first_name, last_name
 FROM 
-	actor;
+	sakila.actor;
 
--- 1b. Query actor for all fist name and last name / convert to uppercase
+-- 1b. Query actor for all fist name and last name displayed in uppercase.
 SELECT 
 	concat(UPPER(first_name)," " ,UPPER(last_name))
 AS 
 	full_name
 FROM 
-	actor;
+	sakila.actor;
 
--- 2a. Query actor whose first name is "Joe" 
+-- 2a. Query actor for the actors whose first name are "Joe".
 SELECT
 	*
 FROM
-	actor
+	sakila.actor
 WHERE 
 	first_name = "Joe";
 
--- 2b. Query actors whose last name contains "GEN" 
+-- 2b. Query actor for the actors whose last name contains "GEN".
 SELECT
 	*
 FROM
-	actor
+	sakila.actor
 WHERE
 	last_name
 LIKE
 	"%GEN%";
 
--- 2c. Query actor whose last name contains "LI" 
+-- 2c. Query actor for the actors whose last name contains "LI".
 SELECT
 	*
 FROM
-	actor
+	sakila.actor
 WHERE
 	last_name
 LIKE
@@ -50,36 +50,37 @@ LIKE
 ORDER BY
 	last_name, first_name;
 
--- 2d. Query country for ("Afghanista", "Bangladesh", "China")
+-- 2d. Query country for the countries in ("Afghanista", "Bangladesh", "China")
 Select
-	* FROM
-	country
+	*
+FROM
+	sakila.country
 WHERE
 	country
 in
 	("Afghanistan", "Bangladesh", "China");
 
--- 3a. Add a "middle_name" column to the "actor" table
+-- 3a. Add a "middle_name" column to the "actor" table.
 ALTER TABLE
-	actor
+	sakila.actor
 ADD
 	middle_name VARCHAR(30)
 AFTER
 	first_name;
 
--- 3b. Modify data type of "middle_name" column "BLOB" in the "actor" table
+-- 3b. Modify data type of "middle_name" column "BLOB" in the "actor" table.
 ALTER TABLE
-	actor
+	sakila.actor
 MODIFY
 	middle_name BLOB;
 
--- 3c. Drop "middle_name" column from the "actor" table
+-- 3c. Drop "middle_name" column from the "actor" table.
 ALTER TABLE
 	actor
 DROP
 	middle_name;
 
--- 4a. Query/Group-by actor for last name / count last names
+-- 4a. Query actor for the count last names.
 SELECT
 	last_name, COUNT(last_name)
 AS
@@ -89,19 +90,19 @@ FROM
 GROUP BY
 	last_name;
 
--- 4b. Query/Group-by actor for last names shared more than two times
+-- 4b. Query actor for last names shared more than two times.
 SELECT
 	last_name, COUNT(last_name)
 AS
 	number_of_actors
 FROM
-	actor
+	sakila.actor
 GROUP BY
 	last_name
 HAVING
 	number_of_actors > 1;
 
--- 4c. Update actor by changing first_name of "GROUCHO WILLIAMS" to "HARPO"
+-- 4c. Update actor by changing first_name of "GROUCHO WILLIAMS" to "HARPO".
 UPDATE
 	actor
 SET
@@ -137,7 +138,7 @@ IN
 SHOW CREATE TABLE sakila.address;
 
 
--- 6a. 
+-- 6a. Query staff-address for first_name, last_name and address.
 SHOW COLUMNS FROM sakila.address; # show address columns
 SHOW COLUMNS FROM sakila.staff; # show staff columns
 
@@ -151,7 +152,7 @@ INNER JOIN
 ON
 	s.address_id = a.address_id;
 
--- 6b. 
+-- 6b. query staff-payment for the total amount rung up by each staff during 08-2005.
 SHOW COLUMNS FROM sakila.staff; # show address columns
 SHOW COLUMNS FROM sakila.payment; # show staff columns
 
@@ -159,16 +160,18 @@ SELECT
 	s.staff_id, s.first_name, s.last_name, SUM(p.amount) AS staff_total_amount
 FROM
 	staff AS s
-INNER JOIN
+RIGHT JOIN
 	payment AS p
 ON
 	s.staff_id = p.staff_id
+WHERE 
+	p.payment_date
+LIKE 
+	"%2005-08%"
 GROUP BY
 	s.staff_id;
--- HAVING
--- 	p.payment_date = "2005-05-25 11:30:37";
 -- 
--- 6c. 
+-- 6c. Query film-film_actor for the films and the number of actors listed in
 SHOW COLUMNS FROM sakila.film; # show address columns
 SHOW COLUMNS FROM sakila.film_actor; # show film_actor columns
 
@@ -183,7 +186,7 @@ ON
 GROUP BY
 	f.film_id;
 
--- 6d. 
+-- 6d. Query film-inventory for copies counts of "Hunchback Impossible"
 SHOW COLUMNS FROM sakila.film; # show address columns
 SHOW COLUMNS FROM sakila.inventory; # show inventory columns
 
@@ -200,7 +203,7 @@ GROUP BY
 HAVING
 	f.title = "Hunchback Impossible";
     
--- 6e. 
+-- 6e. query payment for the total payments made by each customer
 SHOW COLUMNS FROM sakila.payment; # show payment columns
 SHOW COLUMNS FROM sakila.customer; # show coustomer columns
 
@@ -217,7 +220,7 @@ GROUP BY
 ORDER BY
 	c.last_name, c.first_name;
     
--- 7a.
+-- 7a. query film-language for titles starting with either "K" or "Q" in English 
 SELECT
 	title
 FROM
@@ -238,7 +241,7 @@ AND
 OR
 	(title LIKE "Q%");
     
--- 7b.
+-- 7b. query actor-actor_id-film for actors listed in "Alone Trip"
 SELECT
 	first_name, last_name
 FROM
@@ -265,7 +268,7 @@ IN
 	);
 
 
--- 7c. 
+-- 7c. Query customer-address-city-country for first_name, last_name, email and country of customer from canada
 SELECT 
 	c.first_name, c.last_name, c.email, co.country
 FROM sakila.customer AS c
@@ -278,13 +281,13 @@ LEFT JOIN
 ON 
 	ct.city_id = a.city_id
 LEFT JOIN
-	country AS co
+	sakila.country AS co
 ON
 	co.country_id = ct.country_id
 WHERE
 	country = "Canada";
 
--- 7d.
+-- 7d. Query film-film_category-category for family films
 SELECT
 	*
 FROM
@@ -310,33 +313,7 @@ IN
 		)
 	);
 
--- 7e.
-SELECT
-	*
-FROM
-	sakila.film
-WHERE
-	film_id
-IN
-	(
-    SELECT
-		film_id
-	FROM
-		sakila.film_category
-	WHERE
-		category_id
-    IN
-		(
-        SELECT
-			category_id
-		FROM
-			sakila.category
-		WHERE
-			name = "Family"
-		)
-	);
-
--- 7e.
+-- 7e. Query film-inventory-rental for rented films in descending order
 SELECT
 	f.title , COUNT(r.rental_id)
 AS
@@ -356,7 +333,7 @@ GROUP BY
 ORDER BY
 	number_of_rentals DESC;
     
--- 7f.
+-- 7f. Query store-staff-payment for total amount bought in each store
 SELECT
 	st.store_id, sum(p.amount) AS store_revenue
 FROM
@@ -372,7 +349,7 @@ ON
 GROUP BY
 	st.store_id;
 
--- 7g.
+-- 7g. Query store-address-city-country for store_id, city and country of each store
 SELECT
 	s.store_id, ci.city, co.country
 FROM
@@ -382,7 +359,7 @@ JOIN
 ON
 	s.address_id = a.address_id
 JOIN
-	city AS ci
+	sakila.city AS ci
 ON
 	a.city_id = ci.city_id
 JOIN
@@ -390,7 +367,7 @@ JOIN
 ON
 	ci.country_id = co.country_id;
     
--- 7h.
+-- 7h. Query category-film_category-inventory-rental-payment for 5 top genres by revenue in descending order 
 SELECT
 	c.name, sum(p.amount) AS category_revenue
 FROM
@@ -416,7 +393,7 @@ GROUP BY
 ORDER BY
 	category_revenue DESC;
 
--- 8a.
+-- 8a. Create a view for 5 top genres by revenue in descending order 
 CREATE VIEW
 	top_5_genres_by_revenue
 AS SELECT
@@ -445,13 +422,13 @@ ORDER BY
 	category_revenue DESC
 LIMIT 5;
 
--- 8b.
+-- 8b. Display view.
 SELECT
 	*
 FROM
 	top_5_genres_by_revenue;
 
--- 8c.
+-- 8c. Drop view.
 DROP VIEW
 	top_5_genres_by_revenue;
 
