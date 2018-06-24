@@ -80,5 +80,5 @@ This repository includes a collection of sample queries on the [MySQL Sakila sam
 
 ## To Do
 
-- [ ] Add comments.
-- [ ] Update `README.md`.
+- [x] Add comments.
+- [x] Update `README.md`.
