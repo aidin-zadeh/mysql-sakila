@@ -1,10 +1,16 @@
-# Homework Assignment
+# MySQL Sakila Sample database
 
-## Installation Instructions
+This repository includes a collection of sample queries on the [MySQL Sakila sample database](iohttps://dev.mysql.com/doc/sakila/en/).
 
-* Refer to the [installation guide](Installation.md) to install the necessary files.
+## Requirements
 
-## Instructions
+- MySQL 5.7.22-0ubuntu18.04.1
+
+## Installation
+
+* Refer to [here](https://dev.mysql.com/doc/sakila/en/sakila-installation.html) for installatin instructions.
+
+## Descriptions
 
 * 1a. Display the first and last names of all actors from the table `actor`.
 
